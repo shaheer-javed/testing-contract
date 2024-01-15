@@ -1,21 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const { PDFDocument, rgb } = require("pdf-lib");
+const fetch = require("node-fetch");
+const cors = require("cors");
+
 const app = express();
 const port = 4000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 // Set up home route
 app.get("/", (req, res) => {
   res.send("This is the homepage");
 });
-// Set up second page
-app.get("/second", (req, res) => {
-  res.send("This is the second page");
-});
 
 app.post("/", (req, res) => {
-  res.send("POST request to the homepage");
+  console.log(req.body);
+  //   res.send("POST request to the homepage");
+  res.send(req.body);
 });
 
 app.listen(port, () => {
