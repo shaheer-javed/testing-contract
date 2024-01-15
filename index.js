@@ -16,9 +16,12 @@ app.get("/", (req, res) => {
 
 app.post("/", async (req, res) => {
   const postData = req.body;
+
+  console.log(postData);
   let pdf = await createPdf(postData);
 
   console.log(pdf);
+
   res.send(pdf);
 });
 
@@ -33,6 +36,8 @@ async function createPdf(postData) {
     buyerEmail,
     buyerPhoneNumber,
     buyerAddress,
+    offer_price,
+    offer_idea_title,
   } = postData;
   const pdfUrl =
     "http://res.cloudinary.com/dg9sk9vwq/raw/upload/v1704881641/pxrhssqn189jgogwrjdf.pdf";
@@ -59,8 +64,8 @@ async function createPdf(postData) {
 
   const date = new Date().toDateString();
 
-  const idea_title = "EcoHarmony - best app";
-  const purchase_price = "1221 USD";
+  const idea_title = offer_idea_title;
+  const purchase_price = `${offer_price} USD`;
 
   const description =
     "The method accepts three parameters as mentioned above and described below. The method accepts three parameters as mentioned above and described below. The method accepts three parameters as mentioned above and described below. The method accepts three parameters as mentioned above and described belowThe method accepts three parameters as mentioned above and described below. The method accepts three parameters as mentioned above and described .";
@@ -133,7 +138,7 @@ async function createPdf(postData) {
 
   // Description
 
-  addParagraphToPdf(description, helveticaFont, page);
+  addParagraphToPdf(sellerContractDescription, helveticaFont, page);
 
   // Signature Section
   page.drawText(buyer_name, {
